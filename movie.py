@@ -1,22 +1,5 @@
-from enum import Enum
-
-
-class PriceCode(Enum):
-    """An enumeration for different kinds of movies and their behavior"""
-    new_release = {"price": lambda days: 3.0 * days,
-                   "frp": lambda days: days
-                   }
-    normal = {"price": lambda days: 2.0 if days <= 2 else (1.5*(days-2))+2,
-              "frp": lambda days: 1
-              }
-    childrens = {"price": lambda days: 1.5 if days <= 3 else (1.5*(days-3))+1.5,
-                 "frp": lambda days: 1
-                 }
-
-    def price(self, days: int) -> float:
-        "Return the rental price for a given number of days"""
-        pricing = self.value["price"]  # the enum member's price formula
-        return pricing(days)
+from pricecode import PriceCode
+import logging
 
 
 class Movie:
@@ -27,11 +10,20 @@ class Movie:
     REGULAR = 0
     NEW_RELEASE = 1
     CHILDRENS = 2
+    movie_type = {
+        REGULAR: PriceCode.normal,
+        NEW_RELEASE: PriceCode.new_release,
+        CHILDRENS: PriceCode.childrens
+    }
 
     def __init__(self, title, price_code):
         # Initialize a new movie.
         self.title = title
-        self.price_code = price_code
+        if not price_code in Movie.movie_type:
+            log = logging.getLogger()
+            log.error(f"Movie {self.title} has unrecognized priceCode {price_code}")
+            raise ValueError(f"Movie {self.title} has unrecognized priceCode {price_code}")
+        self.price_code = Movie.movie_type[price_code]
 
     def get_price_code(self):
         # get the price code
@@ -39,6 +31,9 @@ class Movie:
 
     def get_title(self):
         return self.title
+
+    def get_frequent_renter_point(self, days):
+        return self.price_code.point(days)
 
     def __str__(self):
         return self.title
