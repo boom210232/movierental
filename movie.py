@@ -19,7 +19,7 @@ class Movie:
     def __init__(self, title, price_code):
         # Initialize a new movie.
         self.title = title
-        if not price_code in Movie.movie_type:
+        if price_code not in Movie.movie_type:
             log = logging.getLogger()
             log.error(f"Movie {self.title} has unrecognized priceCode {price_code}")
             raise ValueError(f"Movie {self.title} has unrecognized priceCode {price_code}")

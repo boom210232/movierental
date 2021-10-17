@@ -64,5 +64,3 @@ if __name__ == "__main__":
     movie = Movie("CitizenFour", Movie.NEW_RELEASE)
     customer.add_rental(Rental(movie, 3))
     print(customer.statement())
-
-
