@@ -7,13 +7,13 @@ from movie import Movie
 class RentalTest(unittest.TestCase):
 
     def setUp(self):
-        self.new_movie = Movie("Mulan", PriceCode.new_release)
-        self.regular_movie = Movie("CitizenFour", PriceCode.normal)
-        self.childrens_movie = Movie("Frozen", PriceCode.childrens)
+        self.new_movie = Movie("Mulan", PriceCode.new_release, 2016, ["everyone"])
+        self.regular_movie = Movie("CitizenFour", PriceCode.normal, 2000, ["action"])
+        self.childrens_movie = Movie("Frozen", PriceCode.childrens, 2017, ["children"])
 
     def test_movie_attributes(self):
         """trivial test to catch refactoring errors or change in API of Movie"""
-        m = Movie("CitizenFour", PriceCode.normal)
+        m = Movie("CitizenFour", PriceCode.normal, 2000, ["action"])
         self.assertEqual("CitizenFour", m.get_title())
         self.assertEqual(PriceCode.normal, m.get_price_code())
 
