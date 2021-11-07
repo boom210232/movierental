@@ -1,4 +1,5 @@
 from enum import Enum
+from datetime import date
 
 
 class Rental:
@@ -19,6 +20,7 @@ class Rental:
         """
         self.movie = movie
         self.days_rented = days_rented
+        self.price_code = PriceCode.for_movie(self.movie)
 
     def get_movie(self):
         return self.movie
@@ -28,11 +30,12 @@ class Rental:
 
     def get_point(self):
         # award renter points
-        return self.movie.get_frequent_renter_point(self.days_rented)
+        return self.price_code.point(self.days_rented)
+        # return self.get_frequent_renter_point(self.days_rented)
 
     def get_charge(self):
         # compute self change
-        return self.movie.price_code.price(self.days_rented)
+        return self.price_code.price(self.days_rented)
 
 
 class PriceCode(Enum):
@@ -56,3 +59,12 @@ class PriceCode(Enum):
         "Return the rental price for a given number of days"""
         compute_point = self.value["frp"]  # the enum member's price formula
         return compute_point(days)
+
+    @classmethod
+    def for_movie(cls, movie):
+        if movie.get_year() == date.today().year:
+            return cls.new_release
+        elif "Children" in movie.get_genre():
+
+            return cls.childrens
+        return cls.normal

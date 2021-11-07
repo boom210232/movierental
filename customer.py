@@ -1,6 +1,6 @@
 from rental import Rental, PriceCode
 from movie import Movie
-
+from movie_catalog_info import MovieCatalog
 
 class Customer:
     """
@@ -37,6 +37,8 @@ class Customer:
 
         for rental in self.rentals:
             #  add detail line to statement
+            # print(f"rental is {rental}")
+            # print(f"movie is {rental.get_movie()}")
             statement += fmt.format(rental.get_movie().get_title(), rental.get_days_rented(), rental.get_charge())
             # and accumulate activity
             total_amount += rental.get_charge()
@@ -57,10 +59,19 @@ class Customer:
 
 
 if __name__ == "__main__":
+
     customer = Customer("Edward Snowden")
     print(customer.statement())
-    movie = Movie("Hacker Noon", PriceCode.normal)
+    catalog = MovieCatalog()
+    movie = catalog.get_movie("Mulan")
     customer.add_rental(Rental(movie, 2))
-    movie = Movie("CitizenFour", PriceCode.new_release)
-    customer.add_rental(Rental(movie, 3))
+    movie = catalog.get_movie("James vs Kotlin")
+    customer.add_rental(Rental(movie, 999))
+    movie = catalog.get_movie("The Martian")
+    customer.add_rental(Rental(movie, 2))
+
+    # movie = Movie("Hacker Noon", PriceCode.normal)
+    # customer.add_rental(Rental(movie, 2))
+    # movie = Movie("CitizenFour", PriceCode.new_release)
+    # customer.add_rental(Rental(movie, 3))
     print(customer.statement())

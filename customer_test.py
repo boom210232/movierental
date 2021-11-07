@@ -4,10 +4,12 @@ from customer import Customer
 from rental import Rental, PriceCode
 from movie import Movie
 # from pricecode import PriceCode
+from movie_catalog_info import MovieCatalog
 
 
 class CustomerTest(unittest.TestCase):
     """ Tests of the Customer class"""
+    catalog = MovieCatalog()
 
     def setUp(self):
         """Test fixture contains:
@@ -16,9 +18,9 @@ class CustomerTest(unittest.TestCase):
         movies = list of some movies
         """
         self.c = Customer("Movie Mogul")
-        self.new_movie = Movie("Mulan", PriceCode.new_release, 2016, ["everyone"])
-        self.regular_movie = Movie("CitizenFour", PriceCode.normal, 2000, ["action"])
-        self.childrens_movie = Movie("Frozen", PriceCode.childrens, 2017, ["children"])
+        self.new_movie = self.catalog.get_movie("James vs Kotlin")
+        self.regular_movie = self.catalog.get_movie("The Martian")
+        self.childrens_movie = self.catalog.get_movie("Mulan")
 
     @unittest.skip("No convenient way to test")
     def test_billing():
