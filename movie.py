@@ -1,5 +1,6 @@
-from pricecode import PriceCode
+# from pricecode import PriceCode
 import logging
+from rental import  PriceCode
 
 
 class Movie:

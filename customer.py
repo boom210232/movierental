@@ -1,6 +1,5 @@
-from rental import Rental
+from rental import Rental, PriceCode
 from movie import Movie
-from pricecode import PriceCode
 
 
 class Customer:

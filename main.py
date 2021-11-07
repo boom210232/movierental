@@ -2,9 +2,9 @@
 # Create a customer with some movies and print a statement.
 
 from movie import Movie
-from rental import Rental
+from rental import Rental, PriceCode
 from customer import Customer
-from pricecode import PriceCode
+# from pricecode import PriceCode
 
 def make_movies():
     movies = [
